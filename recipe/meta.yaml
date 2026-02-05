@@ -1,4 +1,4 @@
-{% set version = "1.0.0" %}
+{% set version = "1.0.1" %}
 
 package:
   name: anaconda-opentelemetry
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://github.com/anaconda/anaconda-otel-python/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 73458fc1ed2b467feffdff9069fb29efb373e4442910587d0486109ebece2435
+  sha256: 173c0aa08c85a9130b8e7e107af7b76662987f845cb6cfb5738f416aebf3066d
 
 build:
   number: 0
@@ -33,7 +33,7 @@ requirements:
 
 test:
   imports:
-    - anaconda.opentelemetry
+    - anaconda_opentelemetry
   source_files:
     - tests/
   requires:
