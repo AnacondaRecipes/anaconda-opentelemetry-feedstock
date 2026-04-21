@@ -41,6 +41,7 @@ test:
     - pip
     - pytest
     - flask
+    - conda
   commands:
     - pip check
     # AnacondaLogger not initialized in this context, resulting in failed tests.
