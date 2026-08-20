@@ -48,10 +48,9 @@ test:
     - conda
   commands:
     - pip check
-    # AnacondaLogger not initialized in this context, resulting in failed tests.
-    # test_verbose_export_errors subprocess tests fail on win workers (WinError 10106 / hash-init).
-    - python -m pytest ./tests -k "not (test_metrics or test_logs)"  # [not win]
-    - python -m pytest ./tests -k "not (test_metrics or test_logs or test_export_errors_print or test_export_errors_silenced)"  # [win]
+    - set OTEL_USE_CONSOLE_EXPORTER=TRUE # [win]
+    - export OTEL_USE_CONSOLE_EXPORTER=TRUE # [unix]
+    - python -m pytest ./tests
 
 about:
   home: https://github.com/anaconda/anaconda-otel-python
