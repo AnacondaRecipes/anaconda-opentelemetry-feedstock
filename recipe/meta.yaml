@@ -1,4 +1,4 @@
-{% set version = "1.2.1" %}
+{% set version = "1.2.2" %}
 {% set name = "anaconda-opentelemetry" %}
 
 package:
@@ -7,11 +7,11 @@ package:
 
 source:
   url: https://github.com/anaconda/anaconda-otel-python/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 8c91f9e9610cc2ed01792d0c29bfddef20f60a38052a17cff050960d9fce9e62
+  sha256: a04d4feafe20eeaebb8086dd10524de50bd2025854e8b2a9dfa44aeafac8e8c1
 
 build:
   number: 0
-  skip: True  # [py<39]
+  skip: True  # [py<310]
   script: pip install . --no-deps --no-build-isolation -vv
 
 requirements:
@@ -23,17 +23,17 @@ requirements:
   run:
     - python
     # To point to conda-recipe/meta.yaml
-    # https://github.com/anaconda/anaconda-otel-python/blob/v1.2.1/conda-recipe/meta.yaml#L23
+    # https://github.com/anaconda/anaconda-otel-python/blob/v1.2.2/conda-recipe/meta.yaml#L23
     # pyproject.toml does not specify all dependency.
     - anaconda-anon-usage
     - pyyaml >=6.0.2
-    - opentelemetry-api ==1.38.0
-    - opentelemetry-exporter-otlp-proto-common ==1.38.0
-    - opentelemetry-exporter-otlp-proto-grpc ==1.38.0
-    - opentelemetry-exporter-otlp-proto-http ==1.38.0
-    - opentelemetry-proto ==1.38.0
-    - opentelemetry-sdk ==1.38.0
-    - opentelemetry-semantic-conventions ==0.59b0
+    - opentelemetry-api ==1.40.0
+    - opentelemetry-exporter-otlp-proto-common ==1.40.0
+    - opentelemetry-exporter-otlp-proto-grpc ==1.40.0
+    - opentelemetry-exporter-otlp-proto-http ==1.40.0
+    - opentelemetry-proto ==1.40.0
+    - opentelemetry-sdk ==1.40.0
+    - opentelemetry-semantic-conventions ==0.61b0
     - grpcio >=1.71.0
 
 test:
@@ -48,8 +48,11 @@ test:
     - conda
   commands:
     - pip check
-    # AnacondaLogger not initialized in this context, resulting in failed tests.
-    - python -m pytest ./tests -k "not (test_metrics or test_logs)"
+    - set OTEL_USE_CONSOLE_EXPORTER=TRUE # [win]
+    - export OTEL_USE_CONSOLE_EXPORTER=TRUE # [unix]
+    # import _overlapped fails with OSError: [WinError 10106] on Windows
+    # This may be due to how the tests are run. 
+    - python -m pytest ./tests -k "not (test_export_errors_print or test_export_errors_silenced)"
 
 about:
   home: https://github.com/anaconda/anaconda-otel-python
