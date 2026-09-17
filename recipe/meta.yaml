@@ -1,4 +1,4 @@
-{% set version = "1.2.2" %}
+{% set version = "1.2.4" %}
 {% set name = "anaconda-opentelemetry" %}
 
 package:
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/anaconda/anaconda-otel-python/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: a04d4feafe20eeaebb8086dd10524de50bd2025854e8b2a9dfa44aeafac8e8c1
+  sha256: 019756c57eacd778676bd10309e0c418814f060a4e44b7c4b10475344a4bce12
 
 build:
   number: 0
@@ -23,7 +23,7 @@ requirements:
   run:
     - python
     # To point to conda-recipe/meta.yaml
-    # https://github.com/anaconda/anaconda-otel-python/blob/v1.2.2/conda-recipe/meta.yaml#L23
+    # https://github.com/anaconda/anaconda-otel-python/blob/v1.2.4/conda-recipe/meta.yaml#L23
     # pyproject.toml does not specify all dependency.
     - anaconda-anon-usage
     - pyyaml >=6.0.2
