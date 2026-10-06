@@ -43,6 +43,7 @@ test:
     - pytest
     - flask
     - conda
+    - pyyaml
   commands:
     - pip check
     - set OTEL_USE_CONSOLE_EXPORTER=TRUE # [win]
