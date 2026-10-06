@@ -37,20 +37,17 @@ test:
   imports:
     - anaconda_opentelemetry
   source_files:
-    - tests/
+    - tests/unit_tests/
   requires:
     - pip
     - pytest
-    - flask
     - conda
     - pyyaml
   commands:
     - pip check
     - set OTEL_USE_CONSOLE_EXPORTER=TRUE # [win]
     - export OTEL_USE_CONSOLE_EXPORTER=TRUE # [unix]
-    # import _overlapped fails with OSError: [WinError 10106] on Windows
-    # This may be due to how the tests are run. 
-    - python -m pytest ./tests -k "not (test_export_errors_print or test_export_errors_silenced)"
+    - pytest ./tests/unit_tests/
 
 about:
   home: https://github.com/anaconda/anaconda-otel-python
